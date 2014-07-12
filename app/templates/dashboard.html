@@ -1,0 +1,43 @@
+{% extends 'layout.html'%}
+
+{% block dashboard %}
+
+
+<div class="col-lg-12">
+{% for message in get_flashed_messages() %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
+
+{% for field in form.errors %}{% for error in form.errors[field] %}<div class="alert alert-danger"><strong>Error:</strong> {{ error }}</div>{% endfor %}{% endfor %}
+
+<div class="well"> 
+
+
+<form action="{{ url_for('postUpdate') }}" method=post>
+
+
+{{ form.hidden_tag() }}{{form.update.label}}
+
+
+<div class="form-group">
+
+{{form.update(class="form-control input-sg")}}
+
+</div>
+
+<button class="btn btn-default">Post</button></div>	
+
+
+{% for get in instance %}
+<div class="panel panel-default">
+  <div class="panel-heading"><a href="{{ app.config['BASEURL']}}/profile/{{get.author}}">{{ get.author }}</a> posted on {{get.pub_dtime}} {% if get.author == user.username %} | <a href="{{ url_for('deletepost', id=get.id) }}">Delete</a>{% endif %}  </div>
+  <div class="panel-body">
+    {{ get.status }}
+
+  </div>
+</div>
+
+{% endfor %}
+
+</div>
+
+
+{% endblock %}

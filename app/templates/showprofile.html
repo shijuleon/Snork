@@ -1,0 +1,36 @@
+{% extends 'layout.html'%}
+
+{% block dashboard %}
+
+
+<div class="col-lg-12">
+{% for message in get_flashed_messages() %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
+
+{% for get in instance %}
+
+<h4>Profile information</h4>
+<ul class="list-group">
+  <li class="list-group-item">Username: {{ get.username }}</li>
+  <li class="list-group-item">First name: {{get.firstname}}</li>
+  <li class="list-group-item">Last name: {{get.lastname}}</li>
+  <li class="list-group-item">Account created on: {{get.acc_created}}</li>
+  <li class="list-group-item">Profile link: {{ app.config['BASEURL']}}/profile/{{get.username}}</li>  
+</ul>
+
+<h4>Posts by {{get.username}}</h4>
+
+{% for post in posts %}
+<div class="panel panel-default">	
+<div class="panel-heading"><a href="{{ app.config['BASEURL']}}/profile/{{post.author}}">{{ post.author }}</a> posted on {{post.pub_dtime}}  | <a href="{{ url_for('deletepost', id=post.id) }}">Delete</a></div>
+  <div class="panel-body">
+    {{ post.status }}
+</div>
+
+</div>
+
+
+{% endfor %}
+{% endfor %}
+</div>
+	
+{% endblock %}

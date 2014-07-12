@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+  
+
+{% block login %}
+
+
+    
+{% for message in get_flashed_messages() %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
+
+{% for field in form.errors %}{% for error in form.errors[field] %}<div class="alert alert-danger"><strong>Error:</strong> {{ error }}</div>{% endfor %}{% endfor %}
+
+<div class="row"><div class="col-xs-4"><h3>Login</h3></br>
+
+<form action="{{ url_for('login') }}" method=post>
+{{ form.hidden_tag() }}
+{{form.username.label}}
+{{form.username(class="form-control input-sg")}}</br>
+{{form.password.label}}
+{{form.password(class="form-control input-sg")}}</br>
+</div></div>
+
+<button class="btn btn-default">Login</button></div></div>
+{% endblock %}
