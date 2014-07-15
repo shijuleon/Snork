@@ -28,3 +28,6 @@ Screenshot
 --
 
 ![alt img](https://raw.githubusercontent.com/shijuleon/Snork/master/dashboard.png)
+
+Want to more more? Checkout about.html in templates
+--
