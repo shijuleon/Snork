@@ -1,13 +1,5 @@
 {% extends "layout.html" %}
-
-  
-
 {% block signup %}
-
-
-    
-{% for message in get_flashed_messages() %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
-
 {% for field in form.errors %}{% for error in form.errors[field] %}<div class="alert alert-danger"><strong>Error:</strong> {{ error }}</div>{% endfor %}{% endfor %}
 
 <div class="row"><div class="col-xs-4"><h3>Signup for Snork</h3></br>
@@ -20,10 +12,8 @@
 {{form.password(class="form-control input-sg")}}</br>
 {{form.email.label}}
 {{form.email(class="form-control input-sg")}}</br>
-{{form.firstname.label}}
-{{form.firstname(class="form-control input-sg")}}</br>
-{{form.lastname.label}}
-{{form.lastname(class="form-control input-sg")}}</br>
+{{form.name.label}}
+{{form.name(class="form-control input-sg")}}</br>
 {{form.recaptcha}}</br>
 </div></div>
 

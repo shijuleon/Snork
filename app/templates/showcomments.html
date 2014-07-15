@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block comments %}
+<div class="panel panel-default">	
+<div class="panel-heading"><a href="{{ app.config['BASEURL']}}/profile/{{post.author}}">{{ post.author }}</a> posted on {{post.pub_dtime}}  | <a href="{{ url_for('deletepost', id=post.id) }}">Delete</a> | <a href=""  data-toggle="modal" data-target="#myModal">View comments</a></div>
+  <div class="panel-body">
+    {{ post.status }}
+</div>
+
+</div>
+
+<h4>Comments</h4>
+
+
+<form action="{{ url_for('postComment', id=id) }}" method=post>		
+				<div class="input-group text-center">
+				
+				{{form.comment(class="form-control input-sg", placeholder="Write a comment")}}
+		 <span class="input-group-btn"><button class="btn btn-primary" type="submit">OK</button></span>
+				</form>	</div></br>
+
+{% for get in instance %}
+
+<div class="panel panel-default" id={{get.id}}>	
+<div class="panel-heading">Anonymous posted on {{get.pub_dtime}} {% if get.author_id == user.id %} |  <a href="{{ url_for('deletecomment', id=get.id) }}">Delete</a>{% endif %} | <a href="{{get.post_id}}#{{get.id}}">{{get.id}}</a></div>
+  <div class="panel-body">
+    {{ get.comment }}
+</div>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

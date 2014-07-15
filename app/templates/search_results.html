@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block search %}
+
+<div class="well">
+  <h4>Search results for "{{query}}"</h4>
+</div>
+  
+{% for get in results %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <a href="{{ app.config['BASEURL']}}/profile/{{get.author}}">{{ get.author }}</a> posted on {{get.pub_dtime}} {% if get.author == user.username %} | <a href="{{ url_for('deletepost', id=get.id) }}">Delete</a>{% endif %} | <a href="{{ url_for('comments', id=get.id) }}">View Comments</a>
+  </div>
+
+  <div class="panel-body">
+    <p>{{ get.status }}</p>
+    <form action="{{ url_for('postComment', id=get.id) }}" method=post>   
+    <div class="input-group text-center">
+        
+        {{form.comment(class="form-control input-sg", placeholder="Write a comment")}}
+     <span class="input-group-btn"><button class="btn btn-primary" type="submit">OK</button></span>
+        </form> 
+        </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+{% endblock %}

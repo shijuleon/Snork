@@ -1,7 +1,7 @@
 from app import app, db
 from models import User
 from flask_wtf import Form, RecaptchaField
-from wtforms import TextField, validators, TextAreaField, PasswordField, ValidationError, SelectField
+from wtforms import TextField, validators, TextAreaField, PasswordField, ValidationError
 from werkzeug.security import check_password_hash
 import re
 
@@ -48,12 +48,15 @@ def check_admin_username(form, field):
 def check_admin_password(form, field):
 	pass
 
+def check_comment(form, field):
+	if len(form.comment.data) < 1:
+		raise ValidationError("Please enter a comment")
+
 class SignupUser(Form):
 	username = TextField('Username', [validators.required("Please enter an username: "), check_username_avail, check_username_chars, check_username_len])
 	password = PasswordField('Password', [validators.required("Please enter a password: ")])
 	email =	TextField('Email', [validators.required("Please enter your email"), validators.Email(), check_email_avail])
-	firstname = TextField('First name', [validators.required("Please enter your first name: ")])
-	lastname = TextField('Last name', [validators.required("Please enter your last name: ")])
+	name = TextField('Name (optional)')
 	recaptcha = RecaptchaField()
 
 class LoginUser(Form):
@@ -65,4 +68,13 @@ class LoginAdmin(Form):
 	password = PasswordField('Password', [validators.required("Please enter your password"), check_admin_password])
 
 class Dashboard(Form):
-	update = TextAreaField("What's up?", [validators.required("Enter something.")])
+	update = TextAreaField("What's up?", [validators.required("Please enter some text.")])
+	search = TextField("What's up?")
+	comment = TextField("Comment", [validators.required("Please enter a comment")])
+
+class EditProfile(Form):
+	website = TextField('Website')
+	interests = TextField('Your interests')
+	contact = TextField('How should someone contact you?')
+	bio = TextField('Something about you')
+	dp = TextField('Profile picture')

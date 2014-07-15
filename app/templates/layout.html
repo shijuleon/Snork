@@ -11,6 +11,9 @@
 
     <!-- Bootstrap core CSS -->
    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
     <!-- Add custom CSS here -->
     <style>
@@ -22,49 +25,68 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Snork</a>
-            </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav"> 
-                    <li>{% if not current_user.is_authenticated() %}<a href="{{ url_for('login') }}">Login</a></li>{% endif %}
-                     <li>{% if not current_user.is_authenticated() %}<a href="{{ url_for('signup') }}">Signup</a></li>{% endif %}
-                     <li>{% if current_user.is_authenticated() %}<a href="{{ url_for('dashboard') }}">Dashboard</a></li>{% endif %}
-                     <li>{% if current_user.is_authenticated() %}<a href="{{ url_for('profile') }}">Profile</a></li>{% endif %}
-                    <li><a href="/about">About Snork</a></li>
-                    <li>{% if current_user.is_authenticated() %}<a href="{{ url_for('logout') }}">Log Out</a></li>{% endif %}
-                </ul>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Snork</a>
+        </div> <!-- navbar-header -->
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav"> 
+            <li>{% if not current_user.is_authenticated() %}<a href="{{ url_for('login') }}">Login</a></li>{% endif %}
+            <li>{% if not current_user.is_authenticated() %}<a href="{{ url_for('signup') }}">Signup</a></li>{% endif %}
+            <li>{% if current_user.is_authenticated() %}<a href="{{ url_for('dashboard') }}">Dashboard</a></li>{% endif %}
+            <li>{% if current_user.is_authenticated() %}<a href="{{ url_for('profile') }}">Profile</a></li>{% endif %}
+            <li><a href="/about">About Snork</a></li>
+        </ul> <!-- nav navbar-nav -->
+
+        {% if current_user.is_authenticated() %}
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
+            
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul> <!-- dropdown-menu -->
+            </li> <!-- dropdown -->
+        </ul> <!-- nav navbar navbar-right -->
+
+        <form action="{{ url_for('search') }}" method=post class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+            {{ form.search(class="form-control input-sg") }}
             </div>
-            <!-- /.navbar-collapse -->
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        {% endif %}   
+      
+        </div> <!-- collapse navbar-collapse navbar-ex1-collapse -->
+
+        
+
+    </div> <!-- container-fluid -->        
+</nav> <!-- navbar navbar-default navbar-fixed-top -->
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        {% for message in get_flashed_messages() %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
+        {% block signup %}{% endblock %}{% block login %}{% endblock %}{% block search %}{% endblock %}{% block index %}{% endblock %}{% block showprofile %}{% endblock %}{% block about %}{% endblock %}{% block dashboard %}{% endblock %}{% block comments %}{% endblock %}
         </div>
-        <!-- /.container -->
-    </nav>
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-12">
-                {% block signup %}{% endblock %}
-                {% block login %}{% endblock %}
-                {% block index %}{% endblock %}
-                {% block about %}{% endblock %}
-                {% block dashboard %}{% endblock %}
-            </div>
-        </div>
-
     </div>
-    <!-- /.container -->
-
+</div><!-- /.container -->
 
 </body>
 

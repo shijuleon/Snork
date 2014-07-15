@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+  
+
+{% block signup %}
+
+
+    
+{% for message in get_flashed_messages() %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
+
+{% for field in form.errors %}{% for error in form.errors[field] %}<div class="alert alert-danger"><strong>Error:</strong> {{ error }}</div>{% endfor %}{% endfor %}
+
+<div class="row"><div class="col-xs-4"><h3>Edit your Snork profile</h3></br>
+
+<form action="{{ url_for('updateprofile') }}" method=post>
+{{sform.hidden_tag() }}
+{{sform.website.label}}	
+{{sform.website(class="form-control input-sg", value=profile.website)}} </br>
+{{sform.interests.label}}
+{{sform.interests(class="form-control input-sg", value=profile.interests) }}</br>
+{{sform.contact.label}}
+{{sform.contact(class="form-control input-sg", value=profile.contact)}}</br>
+{{sform.bio.label}}
+{{sform.bio(class="form-control input-sg", value=profile.bio)}}</br>
+{{sform.dp.label}}
+{{sform.dp(class="form-control input-sg", value=profile.dp)}}</br>
+</div></div>
+
+<button class="btn btn-default">Save changes</button></div></div>
+{% endblock %}
